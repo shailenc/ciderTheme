@@ -37,289 +37,298 @@
 
 @s-bg:					rgb(7, 7, 10);	   	// general app background color
 
+@apple-transition: var(--appleTransition);
+@apple-transition-short: 0.1s var(--appleEase);
+
+@property --volumeSliderFillCol {
+	syntax: "<color>";
+	initial-value: rgb(200 200 200 / 0.6); // color on non-hover, goes to --textColor on hover
+	inherits: false;
+}
+
+@property --songProgressColor {
+	syntax: "<color>";
+	initial-value: rgb(200 200 200 / 0.6); // color on non-hover, goes to --textColor on hover
+	inherits: false;
+}
 
 // .fullscreen-view {
 
-	// black fade for upper and lower bounds of scrolling lyrics
-	.lyric-body {
-		// -webkit-mask-image: -webkit-gradient(linear, left 95%, left bottom, from(#000000), to(rgba(0, 0, 0, 0)));
+// black fade for upper and lower bounds of scrolling lyrics
+.lyric-body {
+	mask-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 8%, rgba(0,0,0,1) 92%, rgba(0,0,0,0) 100%);
+	-webkit-mask-image: $mask-image;
+}
 
-		mask-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 8%, rgba(0,0,0,1) 92%, rgba(0,0,0,0) 100%);
-		-webkit-mask-image: $mask-image;
-	}
+// lol
+[title="DJ Khaled"] {
+	opacity: 100% !important;
+	font-family: "Comic Sans MS", "Comic Sans", cursive;
+	font-weight: 800;
 
-	// 'see all' buttons on rs of screen -- maybe convert to arrows for aesthetic?
-	.cd-btn-seeall {
-		color: aqua;
-	}
+	// stack overflow blessed up 
+	background: red;
+	background: linear-gradient(to right, red , orange, yellow, green, blue, purple);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
 
-
-	// lol
-	[title="DJ Khaled"] {
-		opacity: 100% !important;
-		font-family: "Comic Sans MS", "Comic Sans", cursive;
-		font-weight: 800;
-
-		// stack overflow blessed up 
-		background: red;
-		background: linear-gradient(to right, red , orange, yellow, green, blue, purple);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
-
-	// .mediaitem-card .info-rect {
-	// 	padding-left: 20px !important;
-	// }
-
-	.playback-info {
-		.song-artist {
-			opacity: @s-muted-opacity;
-			text-decoration: none;
-		}
-	}
-
-	.app-chrome-item.volume {
-
-		// opacity: @s-muted-opacity;
-
-		height: @s-volume-slider-height*1.5;
-
-		// remove mute button (just drag the slider to zero L0L)
-		[title="Mute"] {
-			display: none;
-		}
-
-		// volume slider
-		input[type="range"] {
-		
-			height: @s-volume-slider-height;
-			border-radius: @s-volume-slider-height * 2;
-			width: 98%;
-
-			transition: height,width var(--appleTransition);
-
-			&:hover {
-				height: @s-volume-slider-height * 1.5;
-				width: 100%;
-				transition: height,width var(--appleTransition);
-
-
-				&::-webkit-slider-thumb {
-					background-color: var(--songProgressColor);
-					height: @s-volume-slider-height*1.5;
-					width: $height;
-					
-					transition: height,width var(--appleTransition);
-	
-					&:hover {
-						transform: none;
-						transition: height,width var(--appleTransition);
-					}
-				   } 
-			}
-
-			// set length of volume slider fill via color rule for each volume, step=1, from [1, 100]
-			.loop(@counter) when (@counter < 101) {
-				.loop((@counter + @s-volume-slider-step));
-
-				// volume slider fill length
-				&[title="@{counter}%"], &[data-original-title="@{counter}%"] {
-					@volpt: 0.98%*(@counter + 1);
-					background: linear-gradient(
-						to right,
-						var(--songProgressColor) 0% @volpt,
-						var(--songProgressBackground) @volpt 100%
-					) !important;
-				}
-
-			}
-
-			.loop(0);
-
-			&[title="0%"], &[data-original-title="0%"] {
-				&::-webkit-slider-thumb {
-					background: var(--songProgressBackground);
-				}
-			}
-			
-			// the little circle thing on the volume slider
-        	&::-webkit-slider-thumb {
-				background-color: var(--songProgressColor);
-				height: @s-volume-slider-height;
-				width: $height;
-				border: none;
-				box-shadow: none;
-				border-radius: @s-volume-slider-height;
-
-				&:hover {
-					transform: none;
-				}
-       		} 
-      	}
-	}
-
-
-	// make clickable links look better, ie remove text-decoration, use colors instead
-	.item-navigate {
+.playback-info {
+	.song-artist {
 		opacity: @s-muted-opacity;
 		text-decoration: none;
+	}
+}
 
-		transition: opacity var(--appleTransitionShort);
+.fullscreen-view {
+
+	.app-chrome-item.volume {
+		margin-top: 2vh;
+	}
+}
+
+// playback slider adjustments
+.song-progress {
+
+	height: @s-volume-slider-height*1.5;
+	width: 85%;
+	margin-right: auto;
+	margin-left: auto;
+
+	// volume slider
+	& input[type="range"] {
+
+		// invis the circle button on slider
+		&::-webkit-slider-thumb {
+			// opacity: 0;
+		} 
+	
+		height: @s-volume-slider-height !important;
+		border-radius: @s-volume-slider-height * 2.25;
+		width: 98% !important;
+
+		transition: all @apple-transition, --songProgressColor @apple-transition;
 
 		&:hover {
-			opacity: @s-hl-muted-opacity;
+			height: @s-volume-slider-height * 2 !important;
+			width: 100% !important;
+			
+			--songProgressColor: var(--textColor);
 		}
+
 	}
-
-	.cd-mediaitem-square:not(.mediaitem-card), .cd-mediaitem-list-item:not(.mediaitem-card) {
-		justify-content: left;
-
-		.info-rect {
-			padding-left: 2px;
+}
 
 
-			.title {
-				justify-content: left;
-			}
 
-			.subtitle, .subtitle .artist {
-				opacity: @s-muted-opacity;
-				text-decoration: none;
+.app-chrome-item.volume {
 
-				transition: opacity var(--appleTransitionShort);
+	height: @s-volume-slider-height*1.5;
+	width: 85%;
+	margin-right: auto;
+	margin-left: auto;
 
-				&:hover {
-					opacity: @s-hl-muted-opacity;
-				}
-			}
-		}
-
-		.item-navigate {
-			text-align: left;
-		}
-	}
-
-	// make bg solid black, ie dont render blurred img of album art as background
-	.background {
+	// remove mute button (just drag the slider to zero L0L)
+	[title="Mute"] {
 		display: none;
 	}
 
-	// ??? lol put this somewhere where it belongs
-	#app-content {
-		background-color: @s-bg
-	}
+	// volume slider
+	input[type="range"] {
 
-	// slight highlight wells
-	.well {
-		background-color: rgb(150 150 150 / 0.01);
-		transition: background-color var(--appleTransition);
+		// invis the circle button on slider
+		&::-webkit-slider-thumb {
+			opacity: 0;
+		} 
+	
+		height: @s-volume-slider-height !important;
+		border-radius: @s-volume-slider-height * 2.25;
+		width: 98% !important;
+
+		transition: all @apple-transition, --volumeSliderFillCol @apple-transition;
 
 		&:hover {
-			background-color: rgb(150 150 150 / 0.02);
+			height: @s-volume-slider-height * 2 !important;
+			width: 100% !important;
+			
+			--volumeSliderFillCol: var(--textColor);
 		}
-	}
 
-	// if on now-playing tab, fade screen when cursor not on app
-	.row.fs-row {
-		transition: opacity 0.35s var(--appleEase), filter 0.5s var(--appleEase);
-	}
+		// set length of volume slider fill via color rule for each volume, step=1, from [1, 100]
+		.setInputSliderFill(@counter) when (@counter < 101) {
+			.setInputSliderFill((@counter + @s-volume-slider-step));
 
-	&:not(&:hover) .row.fs-row {
-		opacity: 0.3;
-		filter: blur(1px) saturate(0.8);
-		// transition: opacity 0.35s var(--appleEase), filter 0.5s var(--appleEase);
+			// volume slider fill length
+			&[title="@{counter}%"], &[data-original-title="@{counter}%"] {
+				@volume-pct: 1% * (@counter);
+				background: linear-gradient(
+					to right,
+					var(--volumeSliderFillCol) 0% @volume-pct,
+					var(--songProgressBackground) @volume-pct 100%
+				) !important;
+			}
+		}
+		.setInputSliderFill(0);
 	}
+}
+
+// on clickable links - remove text-decoration, use color highlighting instead
+.item-navigate {
+	opacity: @s-muted-opacity;
+	text-decoration: none;
+
+	transition: opacity var(--appleTransitionShort);
 
 	&:hover {
-		& .row.fs-row {
-			opacity: 1;
-			filter: blur(0px) saturate(1);
-			// transition: opacity 0.35s var(--appleEase), filter 0.5s var(--appleEase);
-		}
+		opacity: @s-hl-muted-opacity;
 	}
+}
 
+// left align text underneath cards in made-for-you tabs and others will medium sized cards
+.cd-mediaitem-square:not(.mediaitem-card), .cd-mediaitem-list-item:not(.mediaitem-card) {
+	justify-content: left;
 
-	// lyrics and queue buttons, hover effects and transparency whe not used
-	.tab-toggles {
+	.info-rect {
+		padding-left: 2px;
 
-		// width: calc(@s-tabtoggle-btn-size ~"*" 2.8);
-		// height: calc(@s-tabtoggle-btn-size ~"*" 1.4);
-
-		width: @s-tabtoggle-btn-size*2.8;
-		height: @s-tabtoggle-btn-size*1.4;
-		
-		opacity: 0.07;
-		filter: blur(1px);
-		border-radius: @s-btn-sm-border-radius;
-
-		&:hover {
-			transition: filter,opacity var(--appleTransition);
-			filter: blur(0);
-			opacity: 0.2;
-			background-color: rgb(0 0 0 / 0.5);
+		.title {
+			justify-content: left;
 		}
 
-		.lyrics, .queue {
-			width: @s-tabtoggle-btn-size;
-			height: @s-tabtoggle-btn-size;
-			align-self: center;
-			border-radius: @s-btn-sm-border-radius;
+		.subtitle, .subtitle .artist {
+			opacity: @s-muted-opacity;
+			text-decoration: none;
 
-			&:not(.active):hover {
-				background-color:rgb(255 255 255 / 0.4);
-				transition: background-color var(--appleTransition);
-			}
-		}
-
-		right: @s-screen-edge-padding;
-		bottom: @s-screen-edge-padding;
-
-	}
-
-	// invis top navbar until hover
-	.fs-header .top-nav-group {
-		opacity: 0;
-		transition: opacity 0.15s var(--appleEase);
-	
-		&:hover {
-			opacity: 0.8;
-		}
-	}
-
-	// slight expand of album pic on hover
-	.fs-row .artwork-col .mediaitem-artwork {
-
-		transition: transform 1.25s var(--appleEase);
-		transform: scale(0.995);
-
-		&:hover {
-			transform: scale(1);
-		}
-	}
-
-	// item entry rows in tracklists
-	.cd-mediaitem-list-item {
-
-		// smooth hover highlighting slightly
-		transition: background 0.1s var(--appleEase);
-
-		&:hover {
-			box-shadow: var(--mediaItemShadow-ShadowSubtle);
-		}
-		
-		&:nth-child(odd) {
-			background: rgb(0 0 0 / 0.05);
-
-			transition: background var(--appleTransition);
+			transition: opacity var(--appleTransitionShort);
 
 			&:hover {
-				background: rgba(200, 200, 200, 0.1);
+				opacity: @s-hl-muted-opacity;
 			}
 		}
 	}
 
-	// lower visibility of playlist/album date and playlength info at bottom of tracklist
-	.playlist-time {
-		opacity: @s-muted-opacity;
+	.item-navigate {
+		text-align: left;
 	}
+}
+
+// make bg solid black, ie dont render blurred img of album art as background
+.background {
+	display: none;
+}
+
+// ??? lol put this somewhere where it belongs
+#app-content {
+	background-color: @s-bg
+}
+
+// slight highlight wells
+.well {
+	background-color: rgb(150 150 150 / 0.01);
+	transition: background-color @apple-transition;
+
+	&:hover {
+		background-color: rgb(150 150 150 / 0.02);
+	}
+}
+
+// if on now-playing tab, fade screen when cursor not on app
+.row.fs-row {
+	transition: opacity 0.35s var(--appleEase), filter 0.5s var(--appleEase);
+}
+
+&:not(&:hover) .row.fs-row {
+	opacity: 0.3;
+	filter: blur(1px) saturate(0.8);
+	// transition: opacity 0.35s var(--appleEase), filter 0.5s var(--appleEase);
+}
+
+&:hover {
+	& .row.fs-row {
+		opacity: 1;
+		filter: blur(0px) saturate(1);
+	}
+}
+
+
+// lyrics and queue buttons, hover effects and transparency whe not used
+.tab-toggles {
+
+	width: @s-tabtoggle-btn-size * 2.6 !important;
+	height: @s-tabtoggle-btn-size * 1.2 !important;
+
+	right: @s-tabtoggle-btn-size * 0.5 !important;
+	bottom: $right;
+	
+	opacity: 0.07;
+	filter: blur(1px);
+	border-radius: @s-btn-sm-border-radius;
+
+	&:hover {
+		transition: filter,opacity @apple-transition;
+		filter: blur(0);
+		opacity: 0.2;
+		background-color: rgb(0 0 0 / 0.5);
+	}
+
+	.lyrics, .queue {
+		width: @s-tabtoggle-btn-size;
+		height: @s-tabtoggle-btn-size;
+		align-self: center;
+		border-radius: @s-btn-sm-border-radius;
+
+		&:not(.active):hover {
+			background-color:rgb(255 255 255 / 0.4);
+			transition: background-color @apple-transition;
+		}
+	}
+}
+
+// invis top navbar until hover
+.fs-header .top-nav-group {
+	opacity: 0;
+	transition: opacity 0.15s var(--appleEase);
+
+	&:hover {
+		opacity: 0.8;
+	}
+}
+
+// slight expand of album pic on hover
+.fs-row .artwork-col .mediaitem-artwork {
+
+	transition: transform 1.75s var(--appleEase);
+	transform: scale(0.995);
+
+	&:hover {
+		transform: scale(1);
+	}
+}
+
+// item entry rows in tracklists
+.cd-mediaitem-list-item {
+
+	// smooth hover highlighting slightly
+	transition: background 0.1s var(--appleEase);
+
+	&:hover {
+		box-shadow: var(--mediaItemShadow-ShadowSubtle);
+	}
+	
+	&:nth-child(odd) {
+		background: rgb(0 0 0 / 0.05);
+
+		transition: background @apple-transition;
+
+		&:hover {
+			background: rgba(200, 200, 200, 0.1);
+		}
+	}
+}
+
+// lower visibility of playlist/album date and playlength info at bottom of tracklist
+.playlist-time {
+	opacity: @s-muted-opacity;
+}
+
 // }
