@@ -1,0 +1,84 @@
+.fullscreen-view {
+
+	.app-chrome-item.volume {
+		margin-top: 2vh;
+	}
+
+    // if on now-playing tab, fade screen when cursor not on app
+    .row.fs-row {
+        transition: opacity 0.35s var(--appleEase), filter 0.5s var(--appleEase);
+    }
+
+    &:not(&:hover) .row.fs-row {
+        opacity: 0.3;
+        filter: blur(1px) saturate(0.8);
+        // transition: opacity 0.35s var(--appleEase), filter 0.5s var(--appleEase);
+    }
+    
+    &:hover {
+        & .row.fs-row {
+            opacity: 1;
+            filter: blur(0px) saturate(1);
+        }
+    }
+
+    // lyrics and queue buttons, hover effects and transparency whe not used
+    .tab-toggles {
+
+        width: @s-tabtoggle-btn-size * 2.6 !important;
+        height: @s-tabtoggle-btn-size * 1.2 !important;
+
+        right: @s-tabtoggle-btn-size * 0.5 !important;
+        bottom: $right;
+        
+        opacity: 0.07;
+        filter: blur(1px);
+        border-radius: @s-btn-sm-border-radius;
+
+        &:hover {
+            transition: filter,opacity @apple-transition;
+            filter: blur(0);
+            opacity: 0.2;
+            background-color: rgb(0 0 0 / 0.5);
+        }
+
+        .lyrics, .queue {
+            width: @s-tabtoggle-btn-size;
+            height: @s-tabtoggle-btn-size;
+            align-self: center;
+            border-radius: @s-btn-sm-border-radius;
+
+            &:not(.active):hover {
+                background-color:rgb(255 255 255 / 0.4);
+                transition: background-color @apple-transition;
+            }
+        }
+    }
+
+    // black fade for upper and lower bounds of scrolling lyrics
+    .lyric-body {
+        mask-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 8%, rgba(0,0,0,1) 92%, rgba(0,0,0,0) 100%);
+        -webkit-mask-image: $mask-image;
+    }
+
+    // invis top navbar until hover
+    .fs-header .top-nav-group {
+        opacity: 0;
+        transition: opacity 0.15s var(--appleEase);
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    // slight expand of album pic on hover
+    .fs-row .artwork-col .mediaitem-artwork {
+
+        transition: transform 1.75s var(--appleEase);
+        transform: scale(0.995);
+
+        &:hover {
+            transform: scale(1);
+        }
+    }
+}

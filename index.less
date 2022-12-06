@@ -22,13 +22,21 @@
 // vars from cider, found in their github lol
 	// --appleEase: cubic-bezier(0.42, 0, 0.58, 1);
 
-	
+
+// boolean toggles
+@use-longer-volume-slider: true;
+
+// config
 @s-tabtoggle-btn-size: 		35px;			// size of square lyrics/queue buttons at bottom right
 @s-btn-sm-border-radius:	10%;			// border radius applied to buttons and stuff
 @s-muted-opacity: 			45%;			// muted items, e.g. the tracklist length at bottom
 @s-hl-muted-opacity:		60%;			// highlight opacity for muted items
 @s-screen-edge-padding: 	25px;			// for lyrics+queue buttons, nothing else yet
 @s-volume-slider-height:	5px;			// volume slider height in now-playing page
+@s-top-bar-height:			6vh;			// top bar in non-fullscreen
+@s-sidebar-width:			20vw;
+@s-sidebar-item-height:		36px;			// default is 36px, may need to change font-size as well
+@s-sidebar-item-font-size:	7px;			// default is 14px, or 13px if "Compact UI" is on
 
 
 // should be manually adjusted to match Volume Step setting found in Audio Settings>Volume Controls
@@ -52,13 +60,8 @@
 	inherits: false;
 }
 
-// .fullscreen-view {
-
-// black fade for upper and lower bounds of scrolling lyrics
-.lyric-body {
-	mask-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 8%, rgba(0,0,0,1) 92%, rgba(0,0,0,0) 100%);
-	-webkit-mask-image: $mask-image;
-}
+@import "fullscreen.less";
+@import "misc.less";
 
 // lol
 [title="DJ Khaled"] {
@@ -73,6 +76,21 @@
 	-webkit-text-fill-color: transparent;
 }
 
+.playlist-page .playlist-display {
+	// remove blurred bg art on top of playlist views
+	.artworkContainer {
+		display: none;
+	}
+
+	.playlist-info {
+		// background-color: rgb(0,);
+	}
+}
+
+.playlist-page {
+	padding-top: @s-top-bar-height;
+}
+
 .playback-info {
 	.song-artist {
 		opacity: @s-muted-opacity;
@@ -80,47 +98,80 @@
 	}
 }
 
-.fullscreen-view {
 
-	.app-chrome-item.volume {
-		margin-top: 2vh;
+
+// top bar
+.app-chrome {
+	height: @s-top-bar-height;
+	background-color: rgb(0 0 0 / 0);
+	box-shadow: none;
+}
+
+// sidebar
+#app-sidebar {
+	padding-top: @s-top-bar-height;
+	background-color: @s-bg;
+
+	max-width: @s-sidebar-width;
+
+	& > * {
+		background-color: inherit;
 	}
+
+	.app-sidebar-content {
+
+		.sidebar-playlist {
+			padding: 0px 3px 0px 3px;
+		}	
+	
+		.app-sidebar-item {
+			border-radius: 5px !important;
+			margin: 0px 0px 3px 0px !important;
+			height: @s-sidebar-item-height;
+		}
+	}
+}
+
+// compact sidebar, change font and playlist div height
+#app.compact .app-sidebar-content {
+
+	.app-sidebar-item {
+		height: @s-sidebar-item-height;
+		font-size: @s-sidebar-item-font-size;
+	}
+
+}
+
+.app-chrome-item.playback-controls {
+	max-width: 550px !important;
 }
 
 // playback slider adjustments
 .song-progress {
 
-	height: @s-volume-slider-height*1.5;
-	width: 85%;
-	margin-right: auto;
-	margin-left: auto;
+	width: 100%;
+	align-items: center;
 
-	// volume slider
+	// song playback slider
 	& input[type="range"] {
 
 		// invis the circle button on slider
 		&::-webkit-slider-thumb {
-			// opacity: 0;
-		} 
-	
+		opacity: 0 !important;
+		}
+		
 		height: @s-volume-slider-height !important;
-		border-radius: @s-volume-slider-height * 2.25;
-		width: 98% !important;
 
-		transition: all @apple-transition, --songProgressColor @apple-transition;
+		border-radius: $height;
+		transition: --songProgressColor @apple-transition;
 
 		&:hover {
-			height: @s-volume-slider-height * 2 !important;
-			width: 100% !important;
-			
 			--songProgressColor: var(--textColor);
 		}
-
 	}
 }
 
-
-
+// volume slider
 .app-chrome-item.volume {
 
 	height: @s-volume-slider-height*1.5;
@@ -128,12 +179,11 @@
 	margin-right: auto;
 	margin-left: auto;
 
-	// remove mute button (just drag the slider to zero L0L)
+	// remove mute button cause who actually uses it
 	[title="Mute"] {
 		display: none;
 	}
 
-	// volume slider
 	input[type="range"] {
 
 		// invis the circle button on slider
@@ -143,12 +193,12 @@
 	
 		height: @s-volume-slider-height !important;
 		border-radius: @s-volume-slider-height * 2.25;
-		width: 98% !important;
+		width: 97% !important;
 
 		transition: all @apple-transition, --volumeSliderFillCol @apple-transition;
 
 		&:hover {
-			height: @s-volume-slider-height * 2 !important;
+			height: @s-volume-slider-height * 1.3 !important;
 			width: 100% !important;
 			
 			--volumeSliderFillCol: var(--textColor);
@@ -172,7 +222,7 @@
 	}
 }
 
-// on clickable links - remove text-decoration, use color highlighting instead
+// clickable links - remove text-decoration, use slight color highlighting instead
 .item-navigate {
 	opacity: @s-muted-opacity;
 	text-decoration: none;
@@ -222,87 +272,9 @@
 	background-color: @s-bg
 }
 
-// slight highlight wells
+// lower well brightness
 .well {
-	background-color: rgb(150 150 150 / 0.01);
-	transition: background-color @apple-transition;
-
-	&:hover {
-		background-color: rgb(150 150 150 / 0.02);
-	}
-}
-
-// if on now-playing tab, fade screen when cursor not on app
-.row.fs-row {
-	transition: opacity 0.35s var(--appleEase), filter 0.5s var(--appleEase);
-}
-
-&:not(&:hover) .row.fs-row {
-	opacity: 0.3;
-	filter: blur(1px) saturate(0.8);
-	// transition: opacity 0.35s var(--appleEase), filter 0.5s var(--appleEase);
-}
-
-&:hover {
-	& .row.fs-row {
-		opacity: 1;
-		filter: blur(0px) saturate(1);
-	}
-}
-
-
-// lyrics and queue buttons, hover effects and transparency whe not used
-.tab-toggles {
-
-	width: @s-tabtoggle-btn-size * 2.6 !important;
-	height: @s-tabtoggle-btn-size * 1.2 !important;
-
-	right: @s-tabtoggle-btn-size * 0.5 !important;
-	bottom: $right;
-	
-	opacity: 0.07;
-	filter: blur(1px);
-	border-radius: @s-btn-sm-border-radius;
-
-	&:hover {
-		transition: filter,opacity @apple-transition;
-		filter: blur(0);
-		opacity: 0.2;
-		background-color: rgb(0 0 0 / 0.5);
-	}
-
-	.lyrics, .queue {
-		width: @s-tabtoggle-btn-size;
-		height: @s-tabtoggle-btn-size;
-		align-self: center;
-		border-radius: @s-btn-sm-border-radius;
-
-		&:not(.active):hover {
-			background-color:rgb(255 255 255 / 0.4);
-			transition: background-color @apple-transition;
-		}
-	}
-}
-
-// invis top navbar until hover
-.fs-header .top-nav-group {
-	opacity: 0;
-	transition: opacity 0.15s var(--appleEase);
-
-	&:hover {
-		opacity: 0.8;
-	}
-}
-
-// slight expand of album pic on hover
-.fs-row .artwork-col .mediaitem-artwork {
-
-	transition: transform 1.75s var(--appleEase);
-	transform: scale(0.995);
-
-	&:hover {
-		transform: scale(1);
-	}
+	background-color: rgb(150 150 150 / 0.02);
 }
 
 // item entry rows in tracklists
@@ -330,5 +302,3 @@
 .playlist-time {
 	opacity: @s-muted-opacity;
 }
-
-// }
