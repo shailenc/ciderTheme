@@ -1,0 +1,21 @@
+// quick toggles
+@use-longer-volume-slider:      true;			// volume slider longer for easier small changes
+@use-more-compact-sidebar:      false;			// shorter but wider sidebar entries
+
+// config
+@s-bg:					       rgb(7, 7, 10);   // main app background color
+@s-tabtoggle-btn-size: 		    35px;			// size of square lyrics/queue buttons at bottom right
+@s-btn-sm-border-radius:	    10%;			// border radius applied to buttons and stuff
+@s-muted-opacity: 			    45%;			// muted items, e.g. the tracklist length at bottom
+@s-hl-muted-opacity:		    60%;			// highlight opacity for muted items
+@s-screen-edge-padding: 	    25px;			// for lyrics+queue buttons, nothing else yet
+@s-volume-slider-height:	    5px;			// volume slider height in now-playing page
+@s-top-bar-height:			    6vh;			// top bar in non-fullscreen
+@s-sidebar-width:			    14vw;			// 
+@s-sm-sidebar-item-height:	    25px;			// default 36px
+@s-sm-sidebar-item-font-size:   11.5px;			// default 13px (when "Compact UI" is on)
+
+
+// should be manually adjusted to match Volume Step setting found in Audio Settings>Volume Controls
+// creates 100/x css rules with a loop later, this is truly peak css
+@s-volume-slider-step:		1;				// e.g. Volume Step set to 5%, then value = 5		

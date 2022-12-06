@@ -10,3 +10,33 @@
 		width: 30px;
 	}
 }
+
+// more compact sidebar entries
+#app.compact #app-sidebar when (@use-more-compact-sidebar = true) {
+
+	width: @s-sidebar-width;
+
+	.app-sidebar-content {
+
+		padding: 0 5px 0 5px;
+		
+		.app-sidebar-item {
+			border-radius: var(--mediaItemRadiusSmall);
+			height: @s-sm-sidebar-item-height;
+			font-size: @s-sm-sidebar-item-font-size;
+		}
+	}
+}
+
+// lol
+[title="DJ Khaled"] {
+	opacity: 100% !important;
+	font-family: "Comic Sans MS", "Comic Sans", cursive;
+	font-weight: 800;
+
+	// stack overflow blessed up 
+	background: red;
+	background: linear-gradient(to right, red , orange, yellow, green, blue, purple);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}

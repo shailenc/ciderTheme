@@ -1,50 +1,3 @@
-// BUILT WITH INTENT OF BEING USED ALONG WITH CiOS THEME
-
-// vars from CiOS
-// https://github.com/Arch-Storm/CiOS
-
-	// *** actually referenced in this file ***
-	// --appleTransitionShort: 0.1s var(--appleEase);
-
-	// *** not referenced in this file ***
-	// --color1: rgb(60 60 67/ 2%);
-	// --color2: rgb(203 203 203 / 30%);
-	// --textColor: #333;
-	// --mediaItemShadow-Shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
-	// --mediaItemShadow-ShadowSubtle: 0 4px 4px rgba(0, 0, 0, 0.1);
-	// --ciderShadow-Generic: var(--mediaItemShadow), 0 8px 8px rgb(0 0 0 / 0.15);
-	// --bg: black;
-	// --bg2: #171719;
-	// --contrast: #F92A46;
-	// --filter: brightness(0) saturate(100%) invert(29%) sepia(29%) saturate(7364%) hue-rotate(336deg)
-
-
-// vars from cider, found in their github lol
-	// --appleEase: cubic-bezier(0.42, 0, 0.58, 1);
-
-
-// boolean toggles
-@use-longer-volume-slider: true;
-
-// config
-@s-tabtoggle-btn-size: 		35px;			// size of square lyrics/queue buttons at bottom right
-@s-btn-sm-border-radius:	10%;			// border radius applied to buttons and stuff
-@s-muted-opacity: 			45%;			// muted items, e.g. the tracklist length at bottom
-@s-hl-muted-opacity:		60%;			// highlight opacity for muted items
-@s-screen-edge-padding: 	25px;			// for lyrics+queue buttons, nothing else yet
-@s-volume-slider-height:	5px;			// volume slider height in now-playing page
-@s-top-bar-height:			6vh;			// top bar in non-fullscreen
-@s-sidebar-width:			20vw;
-@s-sidebar-item-height:		36px;			// default is 36px, may need to change font-size as well
-@s-sidebar-item-font-size:	7px;			// default is 14px, or 13px if "Compact UI" is on
-
-
-// should be manually adjusted to match Volume Step setting found in Audio Settings>Volume Controls
-// creates 100/x css rules with a loop later, this is truly peak css
-@s-volume-slider-step:		1;				// e.g. Volume Step set to 5%, then value = 5		
-
-@s-bg:					rgb(7, 7, 10);	   	// general app background color
-
 @apple-transition: var(--appleTransition);
 @apple-transition-short: 0.1s var(--appleEase);
 
@@ -60,21 +13,9 @@
 	inherits: false;
 }
 
+@import "config.less";
 @import "fullscreen.less";
 @import "misc.less";
-
-// lol
-[title="DJ Khaled"] {
-	opacity: 100% !important;
-	font-family: "Comic Sans MS", "Comic Sans", cursive;
-	font-weight: 800;
-
-	// stack overflow blessed up 
-	background: red;
-	background: linear-gradient(to right, red , orange, yellow, green, blue, purple);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-}
 
 .playlist-page .playlist-display {
 	// remove blurred bg art on top of playlist views
@@ -117,29 +58,6 @@
 	& > * {
 		background-color: inherit;
 	}
-
-	.app-sidebar-content {
-
-		.sidebar-playlist {
-			padding: 0px 3px 0px 3px;
-		}	
-	
-		.app-sidebar-item {
-			border-radius: 5px !important;
-			margin: 0px 0px 3px 0px !important;
-			height: @s-sidebar-item-height;
-		}
-	}
-}
-
-// compact sidebar, change font and playlist div height
-#app.compact .app-sidebar-content {
-
-	.app-sidebar-item {
-		height: @s-sidebar-item-height;
-		font-size: @s-sidebar-item-font-size;
-	}
-
 }
 
 .app-chrome-item.playback-controls {
