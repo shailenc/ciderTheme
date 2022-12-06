@@ -1,7 +1,7 @@
 {
-	"name": "fullScreenSideMonitor",
-	"description": "tubingert changes for tubingert preferences",
+	"name": "scTheme",
+	"description": "(early WIP) darkmode with some other minor changes",
 	"version": "1.0.0",
-	"author": "mista boeuf",
-	"github_repo": ""
+	"author": "Chaos#8503",
+	"github_repo": "spezza19/ciderTheme"
 }
