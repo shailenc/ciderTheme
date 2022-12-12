@@ -4,24 +4,28 @@
 		margin-top: 1vh;
 	}
 
-    // if on now-playing tab, fade screen when cursor not on app
     .row.fs-row {
-        transition: opacity 0.35s var(--appleEase), filter 0.5s var(--appleEase);
-        
         // push lyrics/queue and album art closer together into middle of screen on fullscreen nowplaying
 	    padding: 15%;
     }
 
-    &:not(&:hover) .row.fs-row {
-        opacity: 0.3;
-        filter: blur(1px) saturate(0.8);
-        // transition: opacity 0.35s var(--appleEase), filter 0.5s var(--appleEase);
-    }
-    
-    &:hover {
-        & .row.fs-row {
-            opacity: 1;
-            filter: blur(0px) saturate(1);
+    // if on now-playing tab, fade screen when cursor not on app
+    & when(@defocus-fullscreen-off-hover = true) {
+        .row.fs-row {
+            transition: opacity 0.35s var(--appleEase), filter 0.5s var(--appleEase);
+        }
+
+        &:not(&:hover) .row.fs-row {
+            opacity: 0.3;
+            filter: blur(1px) saturate(0.8);
+            // transition: opacity 0.35s var(--appleEase), filter 0.5s var(--appleEase);
+        }
+        
+        &:hover {
+            & .row.fs-row {
+                opacity: 1;
+                filter: blur(0px) saturate(1);
+            }
         }
     }
 
