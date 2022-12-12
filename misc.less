@@ -28,6 +28,7 @@
 	}
 }
 
+// toggleable arrows on sidebar show or not
 .app-sidebar-header-text when (@hide-collapse-arrows = true) {
     
 	background-image: none;
@@ -36,6 +37,31 @@
 		background-image: none;
 	}
 }
+
+// make text under albums and other items centred in replay page
+.replay-viewport * {
+	.title, .subtitle {
+		justify-content: center !important;
+		text-align: center !important;
+	}
+}
+
+// change cider logo at top left to custom
+.app-chrome .app-chrome-item > .app-mainmenu {
+
+	& when (@use-custom-logo = true) {
+		background: url(@custom-logo-url);
+		background-size: contain;
+	}
+
+	& when (@use-grayscale-logo = true) {
+		filter: grayscale(0.4);
+		opacity: 0.5;
+	}
+}
+
+// grayscale upperleft corner logo
+
 
 // lol
 [title="DJ Khaled"] {

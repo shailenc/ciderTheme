@@ -1,12 +1,15 @@
 .fullscreen-view {
 
 	.app-chrome-item.volume {
-		margin-top: 2vh;
+		margin-top: 1vh;
 	}
 
     // if on now-playing tab, fade screen when cursor not on app
     .row.fs-row {
         transition: opacity 0.35s var(--appleEase), filter 0.5s var(--appleEase);
+        
+        // push lyrics/queue and album art closer together into middle of screen on fullscreen nowplaying
+	    padding: 15%;
     }
 
     &:not(&:hover) .row.fs-row {
