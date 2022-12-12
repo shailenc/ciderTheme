@@ -39,21 +39,21 @@
 	}
 }
 
-
-
 // top bar
 .app-chrome {
-	height: @s-top-bar-height;
-	background-color: rgb(0 0 0 / 0);
-	box-shadow: none;
+	min-height: @s-top-bar-height;
+	background-color: @s-bg; 
+	box-shadow: 0px 0px 8px 4px rgb(3 3 3 / 0.5);
+	backdrop-filter: none !important;
 }
 
 // sidebar
 #app-sidebar {
 	padding-top: @s-top-bar-height;
+	background: @s-bg;
 	background-color: @s-bg;
 
-	max-width: @s-sidebar-width;
+	min-width: @s-sidebar-width;
 
 	& > * {
 		background-color: inherit;
