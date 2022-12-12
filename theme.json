@@ -1,6 +1,6 @@
 {
 	"name": "Night Mode",
-	"description": "(still work in progress) Cider theme mainly aiming to make the app feel cleaner + darker, with some toggleable QoL changes as well.",
+	"description": "Dark theme with (all configurable/toggleable) personal preferences+ QoL changes as well.",
 	"version": "1.0.0",
 	"author": "spezza19",
 	"github_repo": "spezza19/ciderTheme"
