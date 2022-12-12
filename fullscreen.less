@@ -88,4 +88,24 @@
             transform: scale(1);
         }
     }
+
+    // move pill buttons on album view below topbar location
+    .content-inner.playlist-page[is-album="true"] {
+        padding: 0;
+
+        .playlist-body {
+            padding-top: 6vh;
+        }
+    }
+
+    // search + triple dot buttons on LS of album view
+    .playlist-page .playlist-display .playlist-controls div {
+        justify-content: center;
+        margin-top: 2vh;
+
+        & * {
+            margin: 0;
+        }
+    }
+
 }
