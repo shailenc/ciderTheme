@@ -79,13 +79,33 @@
     }
 
     // slight expand of album pic on hover
-    .fs-row .artwork-col .mediaitem-artwork {
+    // .fs-row .artwork-col .mediaitem-artwork {
+    .mediaitem-artwork {
 
         transition: transform 1.75s var(--appleEase);
         transform: scale(0.995);
+        overflow: hidden;
 
         &:hover {
             transform: scale(1);
+        }
+    }
+
+    // slight expand of art in side column as well on album view
+    .playlist-display .playlistInfo .playlist-hero {
+        .mediaitem-artwork {
+
+            transition: transform 3.5s var(--appleEase);
+            transform: scale(1);
+            
+        }
+
+        overflow: hidden;
+
+        &:hover {
+            .mediaitem-artwork {
+                transform: scale(1.015);
+            }
         }
     }
 
@@ -106,6 +126,14 @@
         & * {
             margin: 0;
         }
+    }
+
+    // search page, move search AM/library buttons a bit lower
+    // apply same thing to general buttons/selects
+    .search-page .searchToggle,
+    select.md-select, .md-btn
+    {
+        margin-top: 10px;
     }
 
 }
