@@ -29,6 +29,13 @@
         }
     }
 
+    // test, need comment
+    .col.artwork-col {
+        // @jef: 0.8;
+        // scale: @jef;
+        // font-size: 1 / @jef * 1px;
+    }
+
     // lyrics and queue buttons, hover effects and transparency whe not used
     .tab-toggles {
 
@@ -82,12 +89,14 @@
     // .fs-row .artwork-col .mediaitem-artwork {
     .mediaitem-artwork {
 
+        // @artwork-scale: 0.935;
+
         transition: transform 1.75s var(--appleEase);
-        transform: scale(0.995);
+        transform: scale(@artwork-scale);
         overflow: hidden;
 
         &:hover {
-            transform: scale(1);
+            transform: scale(@artwork-scale * 1.005);
         }
     }
 
